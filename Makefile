@@ -43,29 +43,31 @@ INCLUDES = inc/
 LIBFTDIR = libft
 LIBFT = $(LIBFTDIR)/libft.a
 
-UNAME_S := $(shell uname -s)
+UNAME_S = $(shell uname -s)
 ifeq ($(UNAME_S),Linux)
 	LIBMLXDIR	= libmlxlinux
 	MLX_INCLUDE = -lm -lXext -lX11
 	ENV			= -D LINUX
 	LIBMLX = libmlx.a
+	CPLIB =
 
 else
 	LIBMLXDIR	= libmlx
 	MLX_INCLUDE = -framework OpenGL -framework AppKit
 	ENV			=
 	LIBMLX = libmlx.dylib
+	CPLIB = cp $(LIBMLXDIR)/$(LIBMLX) .
 
 endif
 LIBMLXLINK = -L $(LIBMLXDIR) -lmlx
 
-all: makelibmlx makelibft $(NAME)
+all: cplibmlx makelibft $(NAME)
 
 $(NAME): $(OBJS)
 	$(CC) -o $@ $^ $(LIBFT) $(LIBMLXLINK) $(MLX_INCLUDE) $(ENV)
 
-makelibmlx :
-	cp $(LIBMLXDIR)/$(LIBMLX) .
+cplibmlx :
+	$(CPLIB)
 
 makelibft :
 	make -C $(LIBFTDIR)
