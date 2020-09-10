@@ -29,7 +29,7 @@ void	rotate_elem(int key, t_obj *obj)
 	if (key == N7_KEY || key == B_KEY)
 		obj->orient.z += OFFSET_ROT;
 	obj->orient = cap_orient(obj->orient);
-	if (ft_strncmp(obj->label, "cy", 2) == 0)
+	if (ft_strncmp(obj->label, "cy", 2) == 0 && obj->fov == 1)
 	{
 		if (obj->next && ft_strncmp(obj->next->label, "cy", 2) == 0)
 			rotate_elem(key, obj->next);
@@ -50,7 +50,7 @@ void	ray_and_height(int key, t_obj *obj)
 		obj->height -= OFFSET;
 	obj->ray = plancher_size(obj, obj->ray);
 	obj->height = plancher_size(obj, obj->height);
-	if (ft_strncmp(obj->label, "cy", 2) == 0)
+	if (ft_strncmp(obj->label, "cy", 2) == 0 && obj->fov == 1)
 	{
 		if (obj->next && ft_strncmp(obj->next->label, "cy", 2) == 0)
 			ray_and_height(key, obj->next);
@@ -71,7 +71,7 @@ void	move_elem(int key, t_obj *obj)
 		obj->orig.z += OFFSET;
 	if (key == C_KEY)
 		obj->orig.z -= OFFSET;
-	if (ft_strncmp(obj->label, "cy", 2) == 0)
+	if (ft_strncmp(obj->label, "cy", 2) == 0 && obj->fov == 1)
 	{
 		if (obj->next && ft_strncmp(obj->next->label, "cy", 2) == 0)
 			move_elem(key, obj->next);

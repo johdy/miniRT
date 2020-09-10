@@ -20,7 +20,7 @@
 # include "keycode.h"
 
 # define BUFFER_SIZE 4096
-# define OFFSET 10
+# define OFFSET 100
 # define OFFSET_ROT 0.1
 # define E 0.000001
 # define WH 0xFFFFFF
