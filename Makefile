@@ -95,7 +95,6 @@ clean:
 fclean:	clean
 	rm -rf $(NAME)
 	rm -rf libmlx.dylib
-	rm -rf libmlx.a
 	rm -rf shot.bmp
 	make fclean -C $(LIBFTDIR)
 
