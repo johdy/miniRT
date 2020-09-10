@@ -78,7 +78,7 @@ int		check_orient(char *word)
 {
 	int		virg1;
 	int		virg2;
-	double	nb;
+	double	nb[3];
 
 	virg1 = 0;
 	while (word[virg1] != ',')
@@ -86,14 +86,16 @@ int		check_orient(char *word)
 	virg2 = virg1 + 1;
 	while (word[virg2] != ',')
 		virg2++;
-	nb = ft_atof(word);
-	if (nb < -1 || nb > 1)
+	nb[0] = ft_atof(word);
+	if (nb[0] < -1 || nb[0] > 1)
 		return (5);
-	nb = ft_atof(word + virg1 + 1);
-	if (nb < -1 || nb > 1)
+	nb[1] = ft_atof(word + virg1 + 1);
+	if (nb[1] < -1 || nb[1] > 1)
 		return (5);
-	nb = ft_atof(word + virg2 + 1);
-	if (nb < -1 || nb > 1)
+	nb[2] = ft_atof(word + virg2 + 1);
+	if (nb[2] < -1 || nb[2] > 1)
 		return (5);
+	if (nb[0] == 0 && nb[1] == 0 && nb[2] == 0)
+		return(5);
 	return (1);
 }
