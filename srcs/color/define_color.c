@@ -51,7 +51,7 @@ int		define_color(double *intens_l, int color, double amb)
 	if (!(rvb = ft_rvb(color)))
 	{
 		free(intens_l);
-		return (0);
+		return (-1);
 	}
 	rvb[0] = rvb[0] * (intens_l[0] + amb);
 	rvb[1] = rvb[1] * (intens_l[1] + amb);
@@ -70,7 +70,8 @@ t_hit	define_point_color(t_hit ret, t_obj **lst, t_obj *obj, t_vector hp)
 	if (!(light_intensity = light_addition(lst, obj, hp)))
 		return (empty_ret());
 	amb = lookfor(lst, "A")->intens;
-	if (!(ret.color = define_color(light_intensity, obj->color, amb)))
+	ret.color = define_color(light_intensity, obj->color, amb);
+	if (ret.color == -1)
 		return (empty_ret());
 	return (ret);
 }
