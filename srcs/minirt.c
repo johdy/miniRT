@@ -97,7 +97,6 @@ int		main(int argc, char **argv)
 	list->mlx = &mlx;
 	compute_wdw(&mlx, &list, res, argv[2]);
 	manage_console(&list);
-	
 	mlx_key_hook(mlx.cons, deal_key, list);
 	mlx_key_hook(mlx.wdw, escapp, list);
 	mlx_hook(mlx.wdw, CLOSE, 1L << 0, clickescape, list);

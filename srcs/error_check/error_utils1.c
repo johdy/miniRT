@@ -96,6 +96,6 @@ int		check_orient(char *word)
 	if (nb[2] < -1 || nb[2] > 1)
 		return (5);
 	if (nb[0] == 0 && nb[1] == 0 && nb[2] == 0)
-		return(5);
+		return (5);
 	return (1);
 }
