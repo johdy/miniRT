@@ -75,6 +75,19 @@ int		clickescape(t_obj *list)
 	return (0);
 }
 
+int		deal_expose_wdw(t_obj **list)
+{
+	compute_wdw((*list)->mlx, list, lookfor(list, "R"), NULL);
+	return (1);
+}
+
+int		deal_expose_cons(t_obj **list)
+{
+	manage_console(list);
+	return (1);
+}
+
+
 int		main(int argc, char **argv)
 {
 	t_mlx	mlx;
@@ -97,6 +110,8 @@ int		main(int argc, char **argv)
 	list->mlx = &mlx;
 	compute_wdw(&mlx, &list, res, argv[2]);
 	manage_console(&list);
+	mlx_expose_hook(mlx.wdw, deal_expose_wdw, &list);
+	mlx_expose_hook(mlx.cons, deal_expose_cons, &list);
 	mlx_key_hook(mlx.cons, deal_key, list);
 	mlx_key_hook(mlx.wdw, escapp, list);
 	mlx_hook(mlx.wdw, CLOSE, 1L << 0, clickescape, list);
