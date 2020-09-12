@@ -129,6 +129,7 @@ void	flush_off(t_obj *list, int esc)
 int		deal_change(int key, t_obj *list)
 {
 	print_welcome(key, list);
+	printf("key %d", key);
 	if (key == P_KEY)
 		list->change_off = 1;
 	else if (key == O_KEY)
