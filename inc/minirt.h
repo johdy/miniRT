@@ -20,7 +20,6 @@
 # include "keycode.h"
 
 # define BUFFER_SIZE 4096
-# define OFFSET 100
 # define OFFSET_ROT 0.1
 # define E 0.000001
 # define WH 0xFFFFFF
@@ -64,6 +63,11 @@ typedef struct	s_obj
 	struct s_obj	*nextcam;
 	struct s_obj	*currelem;
 	t_mlx			*mlx;
+	int				change_off;
+	int				change_rot;
+	double			offset;
+	char			rot[20];
+	char			off[10];
 }				t_obj;
 
 typedef struct	s_hit
@@ -174,4 +178,5 @@ int				is_not_int(char *word);
 void			create_bmp(int *tabint, t_obj *res, int sl);
 int				escapp(int key, t_obj *list);
 void			cap_resolution(t_obj **list, t_mlx *mlx);
+int				deal_change(int key, t_obj *list);
 #endif

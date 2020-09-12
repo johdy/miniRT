@@ -108,6 +108,9 @@ int		main(int argc, char **argv)
 	mlx.img = mlx_new_image(mlx.ptr, res->width, res->high);
 	mlx.addr = (int *)mlx_get_data_addr(mlx.img, &mlx.bpp, &mlx.sl, &mlx.end);
 	list->mlx = &mlx;
+	list->change_off = 0;
+	list->change_rot = 0;
+	list->offset = 5;
 	compute_wdw(&mlx, &list, res, argv[2]);
 	manage_console(&list);
 	mlx_expose_hook(mlx.wdw, deal_expose_wdw, &list);

@@ -36,45 +36,45 @@ void	rotate_elem(int key, t_obj *obj)
 	}
 }
 
-void	ray_and_height(int key, t_obj *obj)
+void	ray_and_height(int key, t_obj *obj, double offset)
 {
 	if (cannot_change(key, obj->label, 0))
 		return ;
 	if (key == E_KEY)
-		obj->ray += OFFSET;
+		obj->ray += offset;
 	if (key == S_KEY)
-		obj->ray -= OFFSET;
+		obj->ray -= offset;
 	if (key == X_KEY)
-		obj->height += OFFSET;
+		obj->height += offset;
 	if (key == H_KEY)
-		obj->height -= OFFSET;
+		obj->height -= offset;
 	obj->ray = plancher_size(obj, obj->ray);
 	obj->height = plancher_size(obj, obj->height);
 	if (ft_strncmp(obj->label, "cy", 2) == 0 && obj->fov == 1)
 	{
 		if (obj->next && ft_strncmp(obj->next->label, "cy", 2) == 0)
-			ray_and_height(key, obj->next);
+			ray_and_height(key, obj->next, offset);
 	}
 }
 
-void	move_elem(int key, t_obj *obj)
+void	move_elem(int key, t_obj *obj, double offset)
 {
 	if (key == LEFT_KEY)
-		obj->orig.x -= OFFSET;
+		obj->orig.x -= offset;
 	if (key == RIGHT_KEY)
-		obj->orig.x += OFFSET;
+		obj->orig.x += offset;
 	if (key == DOWN_KEY)
-		obj->orig.y -= OFFSET;
+		obj->orig.y -= offset;
 	if (key == UP_KEY)
-		obj->orig.y += OFFSET;
+		obj->orig.y += offset;
 	if (key == F_KEY)
-		obj->orig.z += OFFSET;
+		obj->orig.z += offset;
 	if (key == C_KEY)
-		obj->orig.z -= OFFSET;
+		obj->orig.z -= offset;
 	if (ft_strncmp(obj->label, "cy", 2) == 0 && obj->fov == 1)
 	{
 		if (obj->next && ft_strncmp(obj->next->label, "cy", 2) == 0)
-			move_elem(key, obj->next);
+			move_elem(key, obj->next, offset);
 	}
 }
 
@@ -109,6 +109,8 @@ int		deal_key(int key, t_obj *list)
 	t_obj	*res;
 	char	*title;
 
+	if (key == P_KEY || key == O_KEY || list->change_off || list->change_rot)
+		return (deal_change(key, list));
 	if (key == U_KEY)
 		list = ft_switch_cam(&list);
 	else if (key == N_KEY)
@@ -117,11 +119,11 @@ int		deal_key(int key, t_obj *list)
 		return (0);
 	}
 	else if (key == E_KEY || key == S_KEY || key == X_KEY || key == H_KEY)
-		ray_and_height(key, list->currelem);
+		ray_and_height(key, list->currelem, list->offset);
 	else if (key == LEFT_KEY || key == UP_KEY || key == DOWN_KEY)
-		move_elem(key, list->currelem);
+		move_elem(key, list->currelem, list->offset);
 	else if (key == F_KEY || key == C_KEY || key == RIGHT_KEY)
-		move_elem(key, list->currelem);
+		move_elem(key, list->currelem, list->offset);
 	else if ((key >= N1_KEY && key <= N8_KEY) || key == G_KEY || key == T_KEY)
 		rotate_elem(key, list->currelem);
 	else if (key == R_KEY || key == Y_KEY || key == V_KEY || key == B_KEY)

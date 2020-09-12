@@ -41,12 +41,27 @@
 #  define Y_KEY 16
 #  define Z_KEY 6
 
+#  define UP0_KEY 29
+#  define UP1_KEY 18
+#  define UP2_KEY 19
+#  define UP3_KEY 20
+#  define UP4_KEY 21
+#  define UP5_KEY 23
+#  define UP6_KEY 22
+#  define UP7_KEY 26
+#  define UP8_KEY 28
+#  define UP9_KEY 25
+#  define DOT_KEY 47
+#  define MINUS_KEY 27
+#  define COMA_KEY 43
+
 #  define UP_KEY 126
 #  define DOWN_KEY 125
 #  define RIGHT_KEY 124
 #  define LEFT_KEY 123
 
 #  define ESCAPE 53
+#  define ENTER 36
 #  define CLOSE 17
 
 #  define N1_KEY 83
