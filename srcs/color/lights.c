@@ -12,45 +12,23 @@
 
 #include "minirt.h"
 
-t_vector	normale_sp(t_vector orig_r, t_vector hitpoint, t_obj *sp)
-{
-	t_vector t;
-	t_vector dir;
-
-	dir = get_normalized(subvector(hitpoint, orig_r));
-	t = hit_sphere(orig_r, dir, NULL, sp);
-	if (t.x * t.y < 0)
-		return (get_normalized(subvector(sp->orig, hitpoint)));
-	else
-		return (get_normalized(subvector(hitpoint, sp->orig)));
-}
-
 t_vector	normale_cy(t_vector hitpoint, t_obj *cy)
 {
 	t_vector v;
 
 	v = subvector(hitpoint, cy->orig);
 	v = subvector(v, project(v, cy->orient));
-	if (cy->fov == 1)
-	{
-		v.x = -v.x;
-		v.y = -v.y;
-		v.z = -v.z;
-	}
 	return (get_normalized(v));
 }
 
 t_vector	compute_normale(t_vector hitpoint, t_obj *elem, t_vector orig_r)
 {
 	t_vector normale;
-	t_vector traj;
-	t_vector up;
-	t_vector right;
 	t_vector subv;
 
 	subv = cross_prod(subvector(elem->b, elem->a), subvector(elem->c, elem->a));
 	if (ft_strncmp(elem->label, "sp", ft_strlen(elem->label)) == 0)
-		normale = normale_sp(orig_r, hitpoint, elem);
+		normale = get_normalized(subvector(hitpoint, elem->orig));
 	else if (ft_strncmp(elem->label, "tr", ft_strlen(elem->label)) == 0)
 		normale = get_normalized(subv);
 	else if (ft_strncmp(elem->label, "cy", 2) == 0)
@@ -60,18 +38,13 @@ t_vector	compute_normale(t_vector hitpoint, t_obj *elem, t_vector orig_r)
 	return (normale);
 }
 
-double		*add_light(t_obj *light, t_vecs p_rvb, t_obj **lst)
+double		get_light_intensity(t_obj **lst, t_obj *light, t_vecs p_rvb, t_vector inc)
 {
-	double		intens[2];
-	double		max_intens;
-	int			*light_rvb;
-	t_vector	incidence;
-	t_obj		*cam;
+	double	intens[2];
+	t_obj	*cam;
 
 	cam = lookfor(lst, "c");
-	light_rvb = ft_rvb(light->color);
-	incidence = get_normalized(subvector(light->orig, p_rvb.v1));
-	intens[0] = light->intens * scalaire(p_rvb.v2, incidence);
+	intens[0] = light->intens * scalaire(p_rvb.v2, inc);
 	if (intens[0] > 0 && scalaire(subvector(cam->orig, p_rvb.v1), p_rvb.v2) > 0)
 		intens[0] = intens[0] * no_shadows(lst, p_rvb.v1, light->orig);
 	else
@@ -79,18 +52,30 @@ double		*add_light(t_obj *light, t_vecs p_rvb, t_obj **lst)
 	p_rvb.v2.x = - p_rvb.v2.x;
 	p_rvb.v2.y = - p_rvb.v2.y;
 	p_rvb.v2.z = - p_rvb.v2.z;
-	intens[1] = light->intens * scalaire(p_rvb.v2, incidence);
+	intens[1] = light->intens * scalaire(p_rvb.v2, inc);
 	if (intens[1] > 0 && scalaire(subvector(cam->orig, p_rvb.v1), p_rvb.v2) > 0)
 		intens[1] = intens[1] * no_shadows(lst, p_rvb.v1, light->orig);
 	else
 		intens[1] = 0;
 	if (intens[0] == 0)
-		max_intens = intens[1];
+		return (intens[1]);
 	else
-		max_intens = intens[0];
-	p_rvb.intens_l[0] += max_intens * ((double)light_rvb[0] / 255);
-	p_rvb.intens_l[1] += max_intens * ((double)light_rvb[1] / 255);
-	p_rvb.intens_l[2] += max_intens * ((double)light_rvb[2] / 255);
+		return(intens[0]);	
+}
+
+double		*add_light(t_obj *light, t_vecs p_rvb, t_obj **lst)
+{
+	double		intens;
+	int			*light_rvb;
+	t_vector	incidence;
+	t_obj		*cam;
+
+	light_rvb = ft_rvb(light->color);
+	incidence = get_normalized(subvector(light->orig, p_rvb.v1));
+	intens = get_light_intensity(lst, light, p_rvb, incidence);
+	p_rvb.intens_l[0] += intens * ((double)light_rvb[0] / 255);
+	p_rvb.intens_l[1] += intens * ((double)light_rvb[1] / 255);
+	p_rvb.intens_l[2] += intens * ((double)light_rvb[2] / 255);
 	free(light_rvb);
 	return (p_rvb.intens_l);
 }

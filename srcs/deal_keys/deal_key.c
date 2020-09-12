@@ -29,11 +29,6 @@ void	rotate_elem(int key, t_obj *obj)
 	if (key == N7_KEY || key == B_KEY)
 		obj->orient.z += OFFSET_ROT;
 	obj->orient = cap_orient(obj->orient);
-	if (ft_strncmp(obj->label, "cy", 2) == 0 && obj->fov == 1)
-	{
-		if (obj->next && ft_strncmp(obj->next->label, "cy", 2) == 0)
-			rotate_elem(key, obj->next);
-	}
 }
 
 void	ray_and_height(int key, t_obj *obj, double offset)
@@ -50,11 +45,6 @@ void	ray_and_height(int key, t_obj *obj, double offset)
 		obj->height -= offset;
 	obj->ray = plancher_size(obj, obj->ray);
 	obj->height = plancher_size(obj, obj->height);
-	if (ft_strncmp(obj->label, "cy", 2) == 0 && obj->fov == 1)
-	{
-		if (obj->next && ft_strncmp(obj->next->label, "cy", 2) == 0)
-			ray_and_height(key, obj->next, offset);
-	}
 }
 
 void	move_elem(int key, t_obj *obj, double offset)
@@ -71,11 +61,6 @@ void	move_elem(int key, t_obj *obj, double offset)
 		obj->orig.z += offset;
 	if (key == C_KEY)
 		obj->orig.z -= offset;
-	if (ft_strncmp(obj->label, "cy", 2) == 0 && obj->fov == 1)
-	{
-		if (obj->next && ft_strncmp(obj->next->label, "cy", 2) == 0)
-			move_elem(key, obj->next, offset);
-	}
 }
 
 void	next_elem_console(t_obj *list)
@@ -86,14 +71,7 @@ void	next_elem_console(t_obj *list)
 	clean_console(list->mlx);
 	while (a || r)
 	{
-		if (ft_strncmp(list->currelem->label, "cy", 2) == 0)
-		{
-			if (list->currelem->next->next)
-				list->currelem = list->currelem->next->next;
-			else
-				list->currelem = list;
-		}
-		else if (list->currelem->next)
+		if (list->currelem->next)
 			list->currelem = list->currelem->next;
 		else
 			list->currelem = list;

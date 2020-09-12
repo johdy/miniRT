@@ -21,7 +21,7 @@
 
 # define BUFFER_SIZE 4096
 # define OFFSET_ROT 0.1
-# define E 0.000001
+# define E 0.00000001
 # define WH 0xFFFFFF
 
 typedef struct	s_mlx
@@ -119,7 +119,7 @@ double			hit_square(t_vector or, t_vector di, t_obj **lst, t_obj *sq);
 t_vector		hit_cylinder(t_vector or, t_vector di, t_obj **lst, t_obj *cy);
 int				create_list(char *file, t_obj **lst);
 double			ft_atof(const char *str);
-t_obj			*def_obj(char **words, int cyl);
+t_obj			*def_obj(char **words);
 char			**split(char *s, char *set);
 void			delete_tab(char **words);
 void			bindcams(t_obj **lst, t_obj *cam1);
@@ -128,7 +128,7 @@ t_obj			*define_pl(char **words);
 t_obj			*define_sp(char **words);
 t_obj			*define_sq(char **words);
 t_obj			*define_tr(char **words);
-t_obj			*define_cy(char **words, int cyl);
+t_obj			*define_cy(char **words);
 int				deal_key(int key, t_obj *list);
 void			compute_wdw(t_mlx *mlx, t_obj **lst, t_obj *res, char *arg2);
 int				does_it_hit(t_vector px, t_obj **lst);

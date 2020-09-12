@@ -42,15 +42,9 @@ void	create_obj(char **words, t_obj **lst, int *camcount)
 	t_obj *new;
 	t_obj *new2;
 
-	new = def_obj(words, 0);
+	new = def_obj(words);
 	if (new)
 		add_obj(lst, new, camcount);
-	if (new && ft_strncmp(new->label, "cy", 2) == 0)
-	{
-		new2 = def_obj(words, 1);
-		if (new2)
-			add_obj(lst, new2, camcount);
-	}
 }
 
 int		read_file(t_obj **lst, char *file, int *camcount, t_majcount *ar)

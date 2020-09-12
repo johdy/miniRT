@@ -29,13 +29,6 @@ t_obj	*define_cy(char **words, int cyl)
 	create->ray = ft_atof(words[3]);
 	create->height = ft_atof(words[4]);
 	create->color = atocol(words[5]);
-	if (cyl == 0)
-		create->fov = 0;
-	else
-	{
-		create->fov = 1;
-		create->ray = create->ray - E;
-	}
 	return (create);
 }
 

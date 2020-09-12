@@ -47,14 +47,6 @@ t_vector	cap_orient(t_vector orient)
 
 double		plancher_size(t_obj *obj, double param)
 {
-	if (ft_strncmp(obj->label, "cy", 2) == 0)
-	{
-		if (obj->next && ft_strncmp(obj->next->label, "cy", 2) == 0)
-			param = param <= 0 ? 0 : param;
-		else
-			param = param <= 0 ? 0 + E : param;
-	}
-	else
-		param = param <= 0 ? 0 : param;
+	param = param <= 0 ? 0 : param;
 	return (param);
 }

@@ -5,11 +5,11 @@ void	print_error(void)
 	printf("There was an error\n");
 }
 
-void	print_welcome(int key)
+void	print_welcome(int key, t_obj *list)
 {
-	if (key == P_KEY)
+	if (key == P_KEY && ft_strlen(list->off) == 0)
 		printf("Début de la modification de l'offset\n");
-	if (key == O_KEY)
+	if (key == O_KEY && ft_strlen(list->rot) == 0)
 		printf("Début de la modification de l'orientation\n");
 }
 
@@ -98,11 +98,6 @@ void	flush_rot(t_obj *list, int esc)
 		printf("La nouvelle orientation de l'objet est : %f\n",list->rot);
 		orient = read_tuple(list->rot);
 		list->currelem->orient = fill_vector(list->currelem->orient, orient);
-		if (ft_strncmp(list->currelem->label, "cy", 2) == 0 && list->currelem->fov == 1)
-		{
-			orient = read_tuple(list->rot);
-			list->currelem->next->orient = fill_vector(list->currelem->next->orient, orient);
-		}
 		check = 1;
 	}
 	while (list->rot[i])
@@ -133,7 +128,7 @@ void	flush_off(t_obj *list, int esc)
 
 int		deal_change(int key, t_obj *list)
 {
-	print_welcome(key);
+	print_welcome(key, list);
 	if (key == P_KEY)
 		list->change_off = 1;
 	else if (key == O_KEY)

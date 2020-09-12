@@ -67,7 +67,7 @@ t_obj	*define_c(char **words)
 	return (create);
 }
 
-t_obj	*def_geom(char **words, int cyl)
+t_obj	*def_geom(char **words)
 {
 	t_obj *create;
 
@@ -80,11 +80,11 @@ t_obj	*def_geom(char **words, int cyl)
 	else if (ft_strncmp(words[0], "sq", ft_strlen(words[0])) == 0)
 		create = define_sq(words);
 	else if (ft_strncmp(words[0], "cy", 2) == 0)
-		create = define_cy(words, cyl);
+		create = define_cy(words);
 	return (create);
 }
 
-t_obj	*def_obj(char **words, int cyl)
+t_obj	*def_obj(char **words)
 {
 	t_obj *create;
 
@@ -97,11 +97,8 @@ t_obj	*def_obj(char **words, int cyl)
 	else if (ft_strncmp(words[0], "A", ft_strlen(words[0])) == 0)
 		create = define_a_r(words);
 	else
-		create = def_geom(words, cyl);
-	if (ft_strncmp(words[0], "cy", 2) != 0)
-		delete_tab(words);
-	else if (cyl == 1)
-		delete_tab(words);
+		create = def_geom(words);
+	delete_tab(words);
 	create->next = NULL;
 	return (create);
 }
