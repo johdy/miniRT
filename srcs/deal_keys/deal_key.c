@@ -69,6 +69,8 @@ void	next_elem_console(t_obj *list)
 	int a;
 
 	clean_console(list->mlx);
+	a = 1;
+	r = 1;
 	while (a || r)
 	{
 		if (list->currelem->next)
