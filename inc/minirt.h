@@ -179,4 +179,8 @@ void			create_bmp(int *tabint, t_obj *res, int sl);
 int				escapp(int key, t_obj *list);
 void			cap_resolution(t_obj **list, t_mlx *mlx);
 int				deal_change(int key, t_obj *list);
+void			print_change_error(void);
+void			print_welcome(int key, t_obj *list);
+char			get_number_pressed(int key);
+int				checkpoint_rot(t_obj *list);
 #endif

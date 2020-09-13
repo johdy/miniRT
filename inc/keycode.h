@@ -114,7 +114,7 @@
 #  define LEFT_KEY 65361
 
 #  define ESCAPE 65307
-#  define ENTER 36
+#  define ENTER 65293
 #  define CLOSE 33
 
 #  define N0_KEY 65438
@@ -128,19 +128,19 @@
 #  define N8_KEY 65431
 #  define N9_KEY 65434
 
-#  define UP0_KEY 29
-#  define UP1_KEY 18
-#  define UP2_KEY 19
-#  define UP3_KEY 20
-#  define UP4_KEY 21
-#  define UP5_KEY 23
-#  define UP6_KEY 22
-#  define UP7_KEY 26
-#  define UP8_KEY 28
-#  define UP9_KEY 25
-#  define DOT_KEY 47
-#  define MINUS_KEY 27
-#  define COMA_KEY 43
+#  define UP0_KEY 48
+#  define UP1_KEY 49
+#  define UP2_KEY 50
+#  define UP3_KEY 51
+#  define UP4_KEY 52
+#  define UP5_KEY 53
+#  define UP6_KEY 54
+#  define UP7_KEY 55
+#  define UP8_KEY 56
+#  define UP9_KEY 57
+#  define DOT_KEY 46
+#  define MINUS_KEY 45
+#  define COMA_KEY 44
 
 #  define MAX_DEFX 0
 #  define MAX_DEFY 0

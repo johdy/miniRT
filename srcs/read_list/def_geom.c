@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-t_obj	*define_cy(char **words, int cyl)
+t_obj	*define_cy(char **words)
 {
 	double	*coord;
 	double	*orient;

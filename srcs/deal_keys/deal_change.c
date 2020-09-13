@@ -1,43 +1,5 @@
 #include "minirt.h"
 
-void	print_error(void)
-{
-	printf("There was an error\n");
-}
-
-void	print_welcome(int key, t_obj *list)
-{
-	if (key == P_KEY && ft_strlen(list->off) == 0)
-		printf("Début de la modification de l'offset\n");
-	if (key == O_KEY && ft_strlen(list->rot) == 0)
-		printf("Début de la modification de l'orientation\n");
-}
-
-char	get_number_pressed(int key)
-{
-	if (key == UP0_KEY)
-		return ('0');
-	if (key == UP1_KEY)
-		return ('1');
-	if (key == UP2_KEY)
-		return ('2');
-	if (key == UP3_KEY)
-		return ('3');
-	if (key == UP4_KEY)
-		return ('4');
-	if (key == UP5_KEY)
-		return ('5');
-	if (key == UP6_KEY)
-		return ('6');
-	if (key == UP7_KEY)
-		return ('7');
-	if (key == UP8_KEY)
-		return ('8');
-	if (key == UP9_KEY)
-		return ('9');
-	if (key == DOT_KEY)
-		return ('.');
-}
 
 void	add_rot(int key, t_obj *list)
 {
@@ -48,7 +10,8 @@ void	add_rot(int key, t_obj *list)
 		i++;
 	if (i >= 20)
 	{
-		printf("Nombre de chiffre maximal atteint\n");
+		ft_putstr_fd("Nombre maximal de chiffre atteint. ", 1);
+		ft_putstr_fd("Veuillez appuyer sur ENTER ou ESCAPE. \n", 1);
 		return ;
 	}
 	list->rot[i] = get_number_pressed(key);
@@ -56,7 +19,11 @@ void	add_rot(int key, t_obj *list)
 		list->rot[i] = ',';
 	if (key == MINUS_KEY)
 		list->rot[i] = '-';
-	printf("%s\n",list->rot);
+	if (list->rot[i] == '\0')
+		return ;
+	ft_putstr_fd("Orientation courante : ", 1);
+	ft_putstr_fd(list->rot, 1);
+	ft_putstr_fd("\n", 1);
 	return ;
 }
 
@@ -69,37 +36,36 @@ void	add_off(int key, t_obj *list)
 		i++;
 	if (i >= 10)
 	{
-		printf("Nombre de chiffre maximal atteint\n");
+		ft_putstr_fd("Nombre maximal de chiffre atteint. ", 1);
+		ft_putstr_fd("Veuillez appuyer sur ENTER ou ESCAPE. \n", 1);
 		return ;
 	}
 	list->off[i] = get_number_pressed(key);
-	printf("%s\n",list->off);
+	if (list->off[i] == '\0')
+		return ;
+	ft_putstr_fd("Offset courant : ", 1);
+	ft_putstr_fd(list->off, 1);
+	ft_putstr_fd("\n", 1);
 	return ;
 }
 
 void	flush_rot(t_obj *list, int esc)
 {
 	int i;
-	double *orient;
 	int check;
 
 	check = 0;
 	i = 0;
 	if (esc == 0)
-		printf("Modification annulée\n");
+		ft_putstr_fd("Modification annulée.\n", 1);
 	else if (ft_strlen(list->rot) == 0)
-		print_error();
+		print_change_error();
 	else if (check_tuple(list->rot) != 1)
-		print_error();
+		print_change_error();
 	else if (check_orient(list->rot) != 1)
-		print_error();
+		print_change_error();
 	else
-	{
-		printf("La nouvelle orientation de l'objet est : %f\n",list->rot);
-		orient = read_tuple(list->rot);
-		list->currelem->orient = fill_vector(list->currelem->orient, orient);
-		check = 1;
-	}
+		check = checkpoint_rot(list);
 	while (list->rot[i])
 		list->rot[i++] = '\0';
 	if (check == 1)
@@ -113,32 +79,31 @@ void	flush_off(t_obj *list, int esc)
 
 	i = 0;
 	if (esc == 0)
-		printf("Modification annulée\n");
+		ft_putstr_fd("Modification annulée.\n", 1);
 	else if (ft_strlen(list->off) == 0)
-		print_error();
+		print_change_error();
 	else if (is_not_float(list->off))
-		print_error();
+		print_change_error();
 	else
+	{
+		ft_putstr_fd("Le nouvel offset est : ", 1);
+		ft_putstr_fd(list->off, 1);
+		ft_putstr_fd("\n", 1);
 		list->offset = atof(list->off);
+	}
 	while (list->off[i])
 		list->off[i++] = '\0';
-	printf("Le nouvel offset est de : %f\n",list->offset);
 	return ;
 }
 
 int		deal_change(int key, t_obj *list)
 {
 	print_welcome(key, list);
-	printf("key %d", key);
-	if (key == P_KEY)
+	if (key == P_KEY && list->change_rot == 0)
 		list->change_off = 1;
-	else if (key == O_KEY)
+	else if (key == O_KEY && list->change_off == 0 && cannot_change(key, list->currelem->label, 1) == 0)
 		list->change_rot = 1;
-	else if (list->change_rot == 1)
-		add_rot(key, list);
-	else if (list->change_off == 1)
-		add_off(key, list);
-	if (key == ENTER || key == ESCAPE)
+	else if (key == ENTER || key == ESCAPE)
 	{
 		if (list->change_off == 1)
 			flush_off(list, key - ESCAPE);
@@ -147,5 +112,9 @@ int		deal_change(int key, t_obj *list)
 		list->change_off = 0;
 		list->change_rot = 0;
 	}
+	else if (list->change_rot == 1)
+		add_rot(key, list);
+	else if (list->change_off == 1)
+		add_off(key, list);
 	return (1);
 }

@@ -23,6 +23,7 @@ SRCS = srcs/color/define_color.c 		\
 	srcs/deal_keys/check_param.c 		\
 	srcs/deal_keys/deal_key.c 			\
 	srcs/deal_keys/deal_change.c 			\
+	srcs/deal_keys/deal_change_utils.c 			\
 	srcs/deal_keys/manage_console.c 		\
 	srcs/deal_keys/manage_console2.c 		\
 	srcs/error_check/error_utils1.c 		\
