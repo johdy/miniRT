@@ -21,15 +21,15 @@ double	is_inside_triangle(double t, t_vecs eye, t_vector norm, t_obj *tr)
 	hitpoint = addvector(eye.v1, multvector(eye.v2, t));
 	edge = subvector(tr->b, tr->a);
 	c = cross_prod(edge, subvector(hitpoint, tr->a));
-	if (scalaire(norm, c) < 0)
+	if (scalaire(norm, c) < 0 - E)
 		return (0);
 	edge = subvector(tr->c, tr->b);
 	c = cross_prod(edge, subvector(hitpoint, tr->b));
-	if (scalaire(norm, c) < 0)
+	if (scalaire(norm, c) < 0 - E)
 		return (0);
 	edge = subvector(tr->a, tr->c);
 	c = cross_prod(edge, subvector(hitpoint, tr->c));
-	if (scalaire(norm, c) < 0)
+	if (scalaire(norm, c) < 0 - E)
 		return (0);
 	return (t);
 }
