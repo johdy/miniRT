@@ -17,6 +17,8 @@ double	deal_cylinder(t_vecs eye, t_obj **lst, t_obj *elem, int calc_col)
 	t_vector	t;
 	double		ret;
 
+	if (elem->ray == 0 || elem->height == 0)
+		return (0);
 	t = hit_cylinder(eye.v1, eye.v2, lst, elem);
 	if (t.x == 0 && t.y == 0)
 		ret = 0;
