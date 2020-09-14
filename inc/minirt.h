@@ -183,4 +183,9 @@ void			print_change_error(void);
 void			print_welcome(int key, t_obj *list);
 char			get_number_pressed(int key);
 int				checkpoint_rot(t_obj *list);
+int				clickescape(t_obj *list);
+int				deal_expose_wdw(t_obj **list);
+int				deal_expose_cons(t_obj **list);
+void			init_list(t_obj *list, t_mlx *mlx);
+void			hook_and_loop_mlx(t_obj *list);
 #endif

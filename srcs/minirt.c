@@ -69,25 +69,6 @@ void	compute_wdw(t_mlx *mlx, t_obj **lst, t_obj *res, char *arg2)
 	mlx_put_image_to_window(mlx->ptr, mlx->wdw, mlx->img, 0, 0);
 }
 
-int		clickescape(t_obj *list)
-{
-	exit(0);
-	return (0);
-}
-
-int		deal_expose_wdw(t_obj **list)
-{
-	compute_wdw((*list)->mlx, list, lookfor(list, "R"), NULL);
-	return (1);
-}
-
-int		deal_expose_cons(t_obj **list)
-{
-	manage_console(list);
-	return (1);
-}
-
-
 int		main(int argc, char **argv)
 {
 	t_mlx	mlx;
@@ -107,16 +88,8 @@ int		main(int argc, char **argv)
 	mlx.cons = mlx_new_window(mlx.ptr, 300, 150, "Console");
 	mlx.img = mlx_new_image(mlx.ptr, res->width, res->high);
 	mlx.addr = (int *)mlx_get_data_addr(mlx.img, &mlx.bpp, &mlx.sl, &mlx.end);
-	list->mlx = &mlx;
-	list->change_off = 0;
-	list->change_rot = 0;
-	list->offset = 5;
+	init_list(list, &mlx);
 	compute_wdw(&mlx, &list, res, argv[2]);
 	manage_console(&list);
-	mlx_expose_hook(mlx.wdw, deal_expose_wdw, &list);
-	mlx_expose_hook(mlx.cons, deal_expose_cons, &list);
-	mlx_key_hook(mlx.cons, deal_key, list);
-	mlx_key_hook(mlx.wdw, escapp, list);
-	mlx_hook(mlx.wdw, CLOSE, 1L << 0, clickescape, list);
-	mlx_loop(mlx.ptr);
+	hook_and_loop_mlx(list);
 }

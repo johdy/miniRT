@@ -87,7 +87,6 @@ int		deal_key(int key, t_obj *list)
 {
 	t_mlx	mlx;
 	t_obj	*res;
-	char	*title;
 
 	if (key == P_KEY || key == O_KEY || list->change_off || list->change_rot)
 		return (deal_change(key, list));

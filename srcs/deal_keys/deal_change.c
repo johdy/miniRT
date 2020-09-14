@@ -1,5 +1,16 @@
-#include "minirt.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   deal_change.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jdyer <jdyer@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/09/14 16:13:21 by jdyer             #+#    #+#             */
+/*   Updated: 2020/09/14 16:13:47 by jdyer            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "minirt.h"
 
 void	add_rot(int key, t_obj *list)
 {
@@ -101,8 +112,11 @@ int		deal_change(int key, t_obj *list)
 	print_welcome(key, list);
 	if (key == P_KEY && list->change_rot == 0)
 		list->change_off = 1;
-	else if (key == O_KEY && list->change_off == 0 && cannot_change(key, list->currelem->label, 1) == 0)
-		list->change_rot = 1;
+	else if (key == O_KEY && list->change_off == 0)
+	{
+		if (cannot_change(key, list->currelem->label, 1) == 0)
+			list->change_rot = 1;
+	}
 	else if (key == ENTER || key == ESCAPE)
 	{
 		if (list->change_off == 1)

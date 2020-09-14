@@ -48,6 +48,7 @@ SRCS = srcs/color/define_color.c 		\
 	srcs/utils/vector_manip1.c 		\
 	srcs/utils/vector_manip2.c 		\
 	srcs/utils/minmax.c 			\
+	srcs/utils/mlx_utils.c 			\
 	srcs/minirt.c
 
 OBJS = $(SRCS:.c=.o)
