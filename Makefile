@@ -18,7 +18,6 @@ CFLAGS = -Wall -Werror -Wextra
 
 SRCS = srcs/color/define_color.c 		\
 	srcs/color/lights.c 		\
-	srcs/color/shadows.c 		\
 	srcs/create_bmp/create_bmp.c 		\
 	srcs/deal_keys/check_param.c 		\
 	srcs/deal_keys/deal_key.c 			\
@@ -39,6 +38,9 @@ SRCS = srcs/color/define_color.c 		\
 	srcs/read_list/create_list.c 		\
 	srcs/read_list/def_geom.c		\
 	srcs/read_list/def_obj.c		\
+	srcs/shadows/shadows.c 		\
+	srcs/shadows/does_it_touch.c 		\
+	srcs/shadows/cut_objects.c 		\
 	srcs/utils/get_next_line.c 		\
 	srcs/utils/get_next_line_utils.c 		\
 	srcs/utils/split.c 			\

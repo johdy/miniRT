@@ -6,7 +6,7 @@
 /*   By: jdyer <jdyer@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/23 17:37:36 by jdyer             #+#    #+#             */
-/*   Updated: 2020/08/23 17:37:38 by jdyer            ###   ########.fr       */
+/*   Updated: 2020/09/16 01:50:34 by jdyer            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 # define BUFFER_SIZE 4096
 # define OFFSET_ROT 0.1
-# define E 0.00000001
+# define E 0.0001
 # define WH 0xFFFFFF
 
 typedef struct	s_mlx
@@ -188,4 +188,13 @@ int				deal_expose_wdw(t_obj **list);
 int				deal_expose_cons(t_obj **list);
 void			init_list(t_obj *list, t_mlx *mlx);
 void			hook_and_loop_mlx(t_obj *list);
+t_vector		touch_sphere(t_vector orig_r, t_vector dir, t_obj *sp);
+double			touch_square(t_vector orig_r, t_vector dir, t_obj *sq);
+double			touch_plane(t_vector orig_r, t_vector dir, t_obj *pl);
+double			touch_triangle(t_vector orig_r, t_vector dir, t_obj *tr);
+double			touch_cylinder(t_vector orig_r, t_vector dir, t_obj *cy);
+double			cut_triangle(double t, t_vecs eye, t_vector norm, t_obj *tr);
+double			cut_square(double t, t_vecs eye, t_vector norm, t_obj *sq);
+double			cut_cylinder_shad(t_obj *cy, t_vector t, t_vector orig_r, t_vector dir);
+int				is_btw_pl(t_obj *cy, t_vector hitpoint);
 #endif
